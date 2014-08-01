@@ -22,11 +22,12 @@ node -v
 sudo npm install -g http-server
 sudo npm install -g nodemon
 sudo npm install -g mysql
+sudo npm install -g gistup
 
 ---
 assert.js:102
-  throw new assert.AssertionError({
-        ^
+  throw new assert.AssertionError(
+
 AssertionError: agent3 rejected, but should NOT have been
     at ChildProcess.<anonymous> (/home/vagrant/git/test_d3/node/test/simple/test-tls-server-verify.js:217:14)
     at ChildProcess.EventEmitter.emit (events.js:99:17)
