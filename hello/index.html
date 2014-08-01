@@ -1,21 +1,80 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<title> d3js test </title>
 
 <style>
+body {
+  tab-size: 2;
+}
 
-path {
+.land {
+  fill: #ddd;
+}
+
+.border {
   fill: none;
-  stroke: #000;
+  stroke: #fff;
   stroke-linejoin: round;
   stroke-linecap: round;
 }
 
+.border--mesh {
+  stroke: #000;
+}
+
+.legend circle {
+  fill: none;
+  stroke: #ccc;
+}
+
+.legend text {
+  fill: #777;
+  font: 10px sans-serif;
+  text-anchor: middle;
+}
+
+#map .bubble circle {
+  fill: brown;
+  fill-opacity: .5;
+  stroke: white;
+  stroke-width: .5px;
+}
+
+#map--basic .bubble circle,
+#map--sorted .bubble circle {
+  stroke: white;
+}
+
+#map--sorted .bubble circle {
+  fill-opacity: .5;
+  stroke-width: .5px;
+}
+
+#map .bubble circle:hover {
+  stroke: black;
+  stroke-width: .5px;
+}
+
+#map,
+#map svg {
+  width: 960px;
+  height: 600px;
+}
+
+.map,
+.map svg {
+  width: 720px;
+  height: 450px;
+}
 </style>
+
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
-<script>
 
+
+
+<script>
 var width = 960,
     height = 600;
 
@@ -26,12 +85,25 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-d3.json("build/counties.json", function(error, us) {
+
+d3.json("us.json", function(error, us) {
   if (error) return console.error(error);
 
-  svg.append("path")
-      .datum(topojson.mesh(us))
+   svg.append("path")
+      .datum(topojson.feature(us, us.objects.nation))
+      .attr("class", "land")
       .attr("d", path);
+
+   svg.append("path")
+      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      .attr("class", "border border--state")
+      .attr("d", path);
+
+
+
+
 });
 
 </script>
+
+
